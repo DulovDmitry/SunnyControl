@@ -5,10 +5,10 @@ import QtQuick.Controls 2.0
 ApplicationWindow {
     id: window
     visible: true
-    width: 240  //240
-    height: 135 // 135
-    title: qsTr("Hello World")
-    color: "lightcyan"
+    width: 240*5  //240
+    height: 135*5 // 135
+    //title: qsTr("Hello World")
+    color: "lightgrey"
     flags: Qt.FramelessWindowHint
 
     function popPage() {
@@ -69,14 +69,48 @@ ApplicationWindow {
 
     MyPage {
         id: homePage
-        backgroundColor: "lightcyan"
-        centerText: window.width + " " + window.height
+        backgroundColor: "#F2F2F2"
 
+        Text {
+            anchors.centerIn: parent
+            text: window.width + " " + window.height
+            font {
+                pixelSize: window.height/10
+            }
+        }
+
+        MyStatusBar {
+            color: "#CCFF66"
+        }
+
+        MySpinbox {
+            id: hoursSpinbox
+            maxCount: 99
+            x: window.width/2.7
+            y: window.width/30
+        }
+
+        MySpinbox {
+            id: minutesSpinbox
+            maxCount: 59
+            x: hoursSpinbox.x + window.width/7
+            y: hoursSpinbox.y
+        }
+
+        Text {
+            text: "Время (ЧЧ/ММ)"
+            font.pixelSize: window.height/12
+            rightPadding: window.height/20
+            anchors.right: hoursSpinbox.left
+            anchors.verticalCenter: hoursSpinbox.verticalCenter
+        }
+
+        /*
         Button {
-            width: 20
-            height: 20
-            x: 10
-            y: 10
+            width: window.width/20
+            height: window.height/20
+            x: window.width/20
+            y: window.height/20
             Text {
                 text: "Page 1"
                 anchors.centerIn: parent
@@ -99,19 +133,20 @@ ApplicationWindow {
                 stackView.push(page2)
             }
         }
+        */
     }
 
     MyPage {
         id: page1
         visible: false
         backgroundColor: "lightpink"
-        centerText: "Page1"
+        //centerText: "Page1"
     }
 
     MyPage {
         id: page2
         visible: false
         backgroundColor: "lightgrey"
-        centerText: "Page2"
+        //centerText: "Page2"
     }
 }

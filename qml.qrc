@@ -3,5 +3,7 @@
         <file>main.qml</file>
         <file>MyPage.qml</file>
         <file>Sunny logo.png</file>
+        <file>MyStatusBar.qml</file>
+        <file>MySpinbox.qml</file>
     </qresource>
 </RCC>
