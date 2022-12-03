@@ -1,12 +1,12 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
-import QtQuick.Controls 2.12
+import QtQuick.Controls 2.0
 
 ApplicationWindow {
     id: window
     visible: true
-    width: 480
-    height: 854
+    width: 240  //240
+    height: 135 // 135
     title: qsTr("Hello World")
     color: "lightcyan"
     flags: Qt.FramelessWindowHint
@@ -15,51 +15,51 @@ ApplicationWindow {
         stackView.pop();
     }
 
-    header: ToolBar {
-        height: 70
-        ToolButton {
-            visible: stackView.depth > 1
-            text: "<"
-            anchors.verticalCenter: parent.verticalCenter
-            onClicked: {
-                popPage();
-            }
-        }
+//    header: ToolBar {
+//        height: 70
+//        ToolButton {
+//            visible: stackView.depth > 1
+//            text: "<"
+//            anchors.verticalCenter: parent.verticalCenter
+//            onClicked: {
+//                popPage();
+//            }
+//        }
 
-        Text {
-            id: pageTitle
-            text: stackView.currentItem.title
-            font.pointSize: 24
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
-        }
+//        Text {
+//            id: pageTitle
+//            text: stackView.currentItem.title
+//            font.pointSize: 24
+//            anchors.verticalCenter: parent.verticalCenter
+//            anchors.horizontalCenter: parent.horizontalCenter
+//        }
 
-        Image {
-            id: logoImage
-            width: 100
-            height: parent.height
-            fillMode: Image.PreserveAspectFit
-            smooth: true
-            source: "qrc:/Sunny logo.png"
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.right: parent.right
-        }
-    }
+//        Image {
+//            id: logoImage
+//            width: 100
+//            height: parent.height
+//            fillMode: Image.PreserveAspectFit
+//            smooth: true
+//            source: "qrc:/Sunny logo.png"
+//            anchors.verticalCenter: parent.verticalCenter
+//            anchors.right: parent.right
+//        }
+//    }
 
-    footer: Rectangle {
-        id: bottomStatusBar
-        color: "lightgreen"
-        width: window.width
-        height: 70
-        anchors.bottom: parent.bottom
+//    footer: Rectangle {
+//        id: bottomStatusBar
+//        color: "lightgreen"
+//        width: window.width
+//        height: 70
+//        //anchors.bottom: parent.bottom
 
-        Text {
-            id: statusText
-            text: qsTr("Status: ready")
-            font.pointSize: 12
-            anchors.centerIn: parent
-        }
-    }
+//        Text {
+//            id: statusText
+//            text: qsTr("Status: ready")
+//            font.pointSize: 12
+//            anchors.centerIn: parent
+//        }
+//    }
 
     StackView {
         id: stackView
@@ -70,13 +70,13 @@ ApplicationWindow {
     MyPage {
         id: homePage
         backgroundColor: "lightcyan"
-        centerText: "Home"
+        centerText: window.width + " " + window.height
 
         Button {
-            width: 100
-            height: 50
-            x: 50
-            y: 150
+            width: 20
+            height: 20
+            x: 10
+            y: 10
             Text {
                 text: "Page 1"
                 anchors.centerIn: parent
