@@ -5,8 +5,8 @@ import QtQuick.Controls 2.0
 ApplicationWindow {
     id: window
     visible: true
-    width: 240  //240
-    height: 135 // 135
+    width: 240*5  //240
+    height: 135*5 // 135
     //title: qsTr("Hello World")
     color: "lightgrey"
     flags: Qt.FramelessWindowHint
@@ -15,69 +15,118 @@ ApplicationWindow {
         stackView.pop();
     }
 
-//    header: ToolBar {
-//        height: 70
-//        ToolButton {
-//            visible: stackView.depth > 1
-//            text: "<"
-//            anchors.verticalCenter: parent.verticalCenter
-//            onClicked: {
-//                popPage();
-//            }
-//        }
+    function ledFunction(buttonStatus) {
+        if (buttonStatus) {
+            ledOn()
+        } else {
+            ledOff()
+        }
+    }
 
-//        Text {
-//            id: pageTitle
-//            text: stackView.currentItem.title
-//            font.pointSize: 24
-//            anchors.verticalCenter: parent.verticalCenter
-//            anchors.horizontalCenter: parent.horizontalCenter
-//        }
+    function ledFansFunction(buttonStatus) {
+        if (buttonStatus) {
+            ledFansOn()
+        } else {
+            ledFansOff()
+        }
+    }
 
-//        Image {
-//            id: logoImage
-//            width: 100
-//            height: parent.height
-//            fillMode: Image.PreserveAspectFit
-//            smooth: true
-//            source: "qrc:/Sunny logo.png"
-//            anchors.verticalCenter: parent.verticalCenter
-//            anchors.right: parent.right
-//        }
-//    }
-
-//    footer: Rectangle {
-//        id: bottomStatusBar
-//        color: "lightgreen"
-//        width: window.width
-//        height: 70
-//        //anchors.bottom: parent.bottom
-
-//        Text {
-//            id: statusText
-//            text: qsTr("Status: ready")
-//            font.pointSize: 12
-//            anchors.centerIn: parent
-//        }
-//    }
+    function caseFansFunction(buttonStatus) {
+        if (buttonStatus) {
+            caseFansOn()
+        } else {
+            caseFansOff()
+        }
+    }
 
     StackView {
         id: stackView
         anchors.fill: parent
-        initialItem: homePage
+        initialItem: testpage
+    }
+
+    MyPage {
+        id: testpage
+        backgroundColor: "white"
+
+        Button {
+            id: ledButton
+            x: window.width/15
+            y: window.width/15
+            height: window.height/5
+            width: window.width/4
+
+            checkable: true
+            checked: false
+
+            palette.button: "cyan"
+
+            Text {
+                text: 'LED'
+                font {
+                    pixelSize: parent.width/5
+                }
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            onClicked: ledFunction(checked)
+        }
+
+        Button {
+            id: ledFansButton
+            x: window.width/15
+            y: 3*window.width/15
+            height: window.height/5
+            width: window.width/4
+
+            checkable: true
+            checked: false
+
+            palette.button: "cyan"
+
+            Text {
+                text: 'LED fans'
+                font {
+                    pixelSize: parent.width/5
+                }
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            onClicked: ledFansFunction(checked)
+        }
+
+        Button {
+            id: caseFansButton
+            x: window.width/15
+            y: 5*window.width/15
+            height: window.height/5
+            width: window.width/4
+
+            checkable: true
+            checked: false
+
+            palette.button: "cyan"
+
+            Text {
+                text: 'Case fans'
+                font {
+                    pixelSize: parent.width/5
+                }
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            onClicked: caseFansFunction(checked)
+        }
     }
 
     MyPage {
         id: homePage
+        visible: false
         backgroundColor: "#F2F2F2"
 
-//        Text {
-//            anchors.centerIn: parent
-//            text: window.width + " " + window.height
-//            font {
-//                pixelSize: window.height/10
-//            }
-//        }
 
         MyStatusBar {
             color: "#CCFF66"
