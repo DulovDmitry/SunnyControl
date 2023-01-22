@@ -5,8 +5,8 @@ import QtQuick.Controls 2.0
 ApplicationWindow {
     id: window
     visible: true
-    width: 240*5  //240
-    height: 135*5 // 135
+    width: 240  //240
+    height: 135 // 135
     //title: qsTr("Hello World")
     color: "lightgrey"
     flags: Qt.FramelessWindowHint
@@ -71,13 +71,13 @@ ApplicationWindow {
         id: homePage
         backgroundColor: "#F2F2F2"
 
-        Text {
-            anchors.centerIn: parent
-            text: window.width + " " + window.height
-            font {
-                pixelSize: window.height/10
-            }
-        }
+//        Text {
+//            anchors.centerIn: parent
+//            text: window.width + " " + window.height
+//            font {
+//                pixelSize: window.height/10
+//            }
+//        }
 
         MyStatusBar {
             color: "#CCFF66"
@@ -86,8 +86,16 @@ ApplicationWindow {
         MySpinbox {
             id: hoursSpinbox
             maxCount: 99
-            x: window.width/2.7
+            x: window.width/5
             y: window.width/30
+        }
+
+        Text {
+            text: ":"
+            font.pixelSize: window.height/10
+            leftPadding: window.height/40
+            anchors.left: hoursSpinbox.right
+            anchors.verticalCenter: hoursSpinbox.verticalCenter
         }
 
         MySpinbox {
@@ -98,7 +106,7 @@ ApplicationWindow {
         }
 
         Text {
-            text: "Время (ЧЧ/ММ)"
+            text: "Время"
             font.pixelSize: window.height/12
             rightPadding: window.height/20
             anchors.right: hoursSpinbox.left

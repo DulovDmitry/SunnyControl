@@ -12,7 +12,7 @@ Rectangle {
 
     Rectangle {
         id: left_border
-        width: 2
+        width: 1
         height: window.height
         color: "#808080"
         anchors.right: parent.left
