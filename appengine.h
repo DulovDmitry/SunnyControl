@@ -4,6 +4,9 @@
 #include <QObject>
 #include <QDebug>
 
+#include <wiringPi.h>
+//#include "/home/sunny/wiringOP/wiringPi/wiringPi.h"
+
 class AppEngine : public QObject
 {
     Q_OBJECT

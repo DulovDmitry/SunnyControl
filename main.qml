@@ -5,8 +5,8 @@ import QtQuick.Controls 2.0
 ApplicationWindow {
     id: window
     visible: true
-    width: 240*5  //240
-    height: 135*5 // 135
+    width: 240  //240
+    height: 135 // 135
     //title: qsTr("Hello World")
     color: "lightgrey"
     flags: Qt.FramelessWindowHint

@@ -19,6 +19,8 @@ SOURCES += \
 
 RESOURCES += qml.qrc
 
+LIBS += -lwiringPi -lcrypt -lrt
+
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
 
@@ -31,4 +33,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    ../wiringOP/wiringPi/OrangePi.h \
+    ../wiringOP/wiringPi/softPwm.h \
+    ../wiringOP/wiringPi/wiringPi.h \
     appengine.h
