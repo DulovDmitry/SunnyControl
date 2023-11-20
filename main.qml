@@ -5,8 +5,8 @@ import QtQuick.Controls 2.0
 ApplicationWindow {
     id: window
     visible: true
-    width: 240  //240
-    height: 135 // 135
+    width: 1024  //240
+    height: 600 // 135
     //title: qsTr("Hello World")
     color: "lightgrey"
     flags: Qt.FramelessWindowHint
@@ -48,6 +48,20 @@ ApplicationWindow {
     MyPage {
         id: testpage
         backgroundColor: "white"
+
+        Rectangle {
+            width: 1024
+            height: 50
+            anchors.top: parent.top;
+            color: "red"
+        }
+
+        Rectangle {
+            width: 1024
+            height: 50
+            anchors.bottom: parent.bottom;
+            color: "red"
+        }
 
         Button {
             id: ledButton
