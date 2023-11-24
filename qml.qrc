@@ -5,5 +5,10 @@
         <file>Sunny logo.png</file>
         <file>MyStatusBar.qml</file>
         <file>MySpinbox.qml</file>
+        <file>MainPage.qml</file>
+        <file>PageSelectionButton.qml</file>
+        <file>SystemDateTime.qml</file>
+        <file>PageSelectionBar.qml</file>
+        <file>StatusBar.qml</file>
     </qresource>
 </RCC>

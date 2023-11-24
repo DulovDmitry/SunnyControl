@@ -8,12 +8,62 @@ ApplicationWindow {
     visible: true
     width: 1024
     height: 600
-    color: "yellow"
+    color: "black"
     flags: Qt.FramelessWindowHint
+
+    function pageSelectionButtonClicked(pageNumber) {
+        console.log("Clicked at " + pageNumber + " page")
+
+        if (pageNumber === 0) { stackView.clear(); stackView.push(firstPage) }
+        else if (pageNumber === 1) { stackView.clear(); stackView.push(secondPage) }
+        else if (pageNumber === 2) { stackView.clear(); stackView.push(thirdPage) }
+        else if (pageNumber === 3) { stackView.clear(); stackView.push(fourthPage) }
+    }
+
+    StackView {
+        id: stackView
+
+        anchors.fill: parent
+        initialItem: firstPage
+    }
 
 
     MainPage {
-        id: mainPage
+        id: firstPage
+        visible: false
+
+        baseColor: "yellow"
+        pageText: "Page 1"
+
+        anchors.fill: parent
+    }
+
+    MainPage {
+        id: secondPage
+        visible: false
+
+        baseColor: "red"
+        pageText: "Page 2"
+
+        anchors.fill: parent
+    }
+
+    MainPage {
+        id: thirdPage
+        visible: false
+
+        baseColor: "blue"
+        pageText: "Page 3"
+
+        anchors.fill: parent
+    }
+
+    MainPage {
+        id: fourthPage
+        visible: false
+
+        baseColor: "green"
+        pageText: "Page 4"
 
         anchors.fill: parent
     }
@@ -26,6 +76,8 @@ ApplicationWindow {
         fontSize: 19
         buttonHeight: 50
         baseColor: "#DFDFDF"
+
+        onButtonClicked: (pageNumber) => pageSelectionButtonClicked(pageNumber)
     }
 
     StatusBar {

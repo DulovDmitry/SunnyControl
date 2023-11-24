@@ -3,7 +3,9 @@ import QtQuick.Window 2.12
 import QtQuick.Controls 2.0
 
 Rectangle {
-    id: pageSelectionBar
+    id: root
+
+    signal buttonClicked(int pageNumber)
 
     property int buttonBottomMargin: 0
     property int buttonLeftMargin: 0
@@ -11,29 +13,20 @@ Rectangle {
     property int buttonHeight: 50
     property color baseColor: "#DFDFDF"
 
-    width: parent.width
-    height: 50
-    anchors.top: parent.top
-
-    color: baseColor
-
-    function pageButtonClicked(pageNumber) {
+    function pageButtonClicked(clickedButton) {
         mainPageButton.isActive = false
         manualControlPageButton.isActive = false
         infoPageButton.isActive = false
         stirringPageButton.isActive = false
 
-        if (pageNumber === 0) {
-            mainPageButton.isActive = true
-        } else if (pageNumber === 1) {
-            manualControlPageButton.isActive = true
-        } else if (pageNumber === 2) {
-            infoPageButton.isActive = true
-        } else if (pageNumber === 3) {
-            stirringPageButton.isActive = true
-        }
-
+        clickedButton.isActive = true
     }
+
+    width: parent.width
+    height: 50
+    anchors.top: parent.top
+
+    color: baseColor
 
     SystemDateTime {
         id: systemDateTime
@@ -56,6 +49,8 @@ Rectangle {
         anchors.bottomMargin: parent.buttonBottomMargin
         anchors.left: parent.left
         anchors.leftMargin: parent.buttonLeftMargin + 25
+
+        onClicked: root.buttonClicked(pageNumber)
     }
 
     PageSelectionButton {
@@ -71,6 +66,8 @@ Rectangle {
         anchors.bottomMargin: parent.buttonBottomMargin
         anchors.left: mainPageButton.right
         anchors.leftMargin: parent.buttonLeftMargin
+
+        onClicked: root.buttonClicked(pageNumber)
     }
 
     PageSelectionButton {
@@ -86,6 +83,8 @@ Rectangle {
         anchors.bottomMargin: parent.buttonBottomMargin
         anchors.left: manualControlPageButton.right
         anchors.leftMargin: parent.buttonLeftMargin
+
+        onClicked: root.buttonClicked(pageNumber)
     }
 
     PageSelectionButton {
@@ -101,5 +100,7 @@ Rectangle {
         anchors.bottomMargin: parent.buttonBottomMargin
         anchors.left: infoPageButton.right
         anchors.leftMargin: parent.buttonLeftMargin
+
+        onClicked: root.buttonClicked(pageNumber)
     }
 }

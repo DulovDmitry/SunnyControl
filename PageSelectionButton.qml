@@ -4,6 +4,8 @@ import QtGraphicalEffects 1.0
 Item {
     id: root
 
+    signal clicked()
+
     property bool isActive: true
 
     property int pageNumber: 0
@@ -140,6 +142,9 @@ Item {
 
     MouseArea {
         anchors.fill: parent
-        onClicked: { root.parent.pageButtonClicked(pageNumber) }
+        onClicked: {
+            root.parent.pageButtonClicked(root)
+            root.clicked()
+        }
     }
 }
