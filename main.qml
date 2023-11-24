@@ -4,6 +4,7 @@ import QtQuick.Controls 2.0
 
 ApplicationWindow {
     id: window
+
     visible: true
     width: 1024
     height: 600
@@ -13,6 +14,7 @@ ApplicationWindow {
 
     MainPage {
         id: mainPage
+
         anchors.fill: parent
     }
 
@@ -26,7 +28,11 @@ ApplicationWindow {
         baseColor: "#DFDFDF"
     }
 
+    StatusBar {
+        id: statusBar
 
+        status: 0
+    }
 
 
 //    function popPage() {
