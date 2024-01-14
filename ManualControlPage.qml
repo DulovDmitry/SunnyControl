@@ -14,6 +14,7 @@ Item {
     property int switchLabelFontSize: 30
 
     Rectangle {
+        id: baseRectangle
         anchors.fill: parent;
         color: baseColor
 
@@ -74,16 +75,20 @@ Item {
             checkable: true
 
             display: AbstractButton.TextBesideIcon
-            text: lockButton.checked ? "Unlock" : "Lock"
+            text: lockButton.checked ? "Unlocked" : "Locked"
+            font.pointSize: 15
+
+            icon.source: lockButton.checked ? "qrc:/icons/unlocked_256.png" : "qrc:/icons/locked_256.png"
 
             height: 60
-            width: 200
+            width: 150
             anchors.top: parent.top
             anchors.topMargin: 70
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.right: parent.right
+            anchors.rightMargin: 20
 
             background: Rectangle {
-                color: "red"
+                color: lockButton.checked ? "#d9d9d9" : "#ffc875"
                 radius: 10
             }
 

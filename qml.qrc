@@ -12,5 +12,8 @@
         <file>StatusBar.qml</file>
         <file>ManualControlPage.qml</file>
         <file>MySwitch.qml</file>
+        <file>icons/locked_256.png</file>
+        <file>icons/unlocked_256.png</file>
+        <file>MyCounterElement.qml</file>
     </qresource>
 </RCC>

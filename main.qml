@@ -35,6 +35,8 @@ ApplicationWindow {
         pageText: "Page 1"
 
         anchors.fill: parent
+
+
     }
 
     ManualControlPage {
