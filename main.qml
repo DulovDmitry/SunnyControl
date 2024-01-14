@@ -14,7 +14,7 @@ ApplicationWindow {
     function pageSelectionButtonClicked(pageNumber) {
         console.log("Clicked at " + pageNumber + " page")
 
-        if (pageNumber === 0) { stackView.clear(); stackView.push(firstPage) }
+        if (pageNumber === 0) { stackView.clear(); stackView.push(mainPage) }
         else if (pageNumber === 1) { stackView.clear(); stackView.push(secondPage) }
         else if (pageNumber === 2) { stackView.clear(); stackView.push(thirdPage) }
         else if (pageNumber === 3) { stackView.clear(); stackView.push(fourthPage) }
@@ -24,26 +24,22 @@ ApplicationWindow {
         id: stackView
 
         anchors.fill: parent
-        initialItem: firstPage
+        initialItem: mainPage
     }
 
 
     MainPage {
-        id: firstPage
+        id: mainPage
         visible: false
 
-        baseColor: "yellow"
         pageText: "Page 1"
 
         anchors.fill: parent
     }
 
-    MainPage {
+    ManualControlPage {
         id: secondPage
         visible: false
-
-        baseColor: "red"
-        pageText: "Page 2"
 
         anchors.fill: parent
     }
@@ -52,7 +48,6 @@ ApplicationWindow {
         id: thirdPage
         visible: false
 
-        baseColor: "blue"
         pageText: "Page 3"
 
         anchors.fill: parent
@@ -62,7 +57,6 @@ ApplicationWindow {
         id: fourthPage
         visible: false
 
-        baseColor: "green"
         pageText: "Page 4"
 
         anchors.fill: parent

@@ -10,5 +10,7 @@
         <file>SystemDateTime.qml</file>
         <file>PageSelectionBar.qml</file>
         <file>StatusBar.qml</file>
+        <file>ManualControlPage.qml</file>
+        <file>MySwitch.qml</file>
     </qresource>
 </RCC>

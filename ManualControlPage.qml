@@ -1,0 +1,93 @@
+import QtQuick 2.0
+import QtQuick.Controls 2.0
+
+Item {
+    id: root
+
+    property color baseColor: "#F5F5F5"
+    property color fontColor_enabled: "#333344"
+    property color fontColor_disabled: "#9999AA"
+    property color switcherColor: Qt.lighter("#2b99b9")
+
+    property bool switchersEnabled: false
+
+    property int switchLabelFontSize: 30
+
+    Rectangle {
+        anchors.fill: parent;
+        color: baseColor
+
+        Grid {
+            columns: 2
+            rowSpacing: 60
+            columnSpacing: 30
+
+            anchors.left: parent.left
+            anchors.leftMargin: 50
+            anchors.verticalCenter: parent.verticalCenter
+
+            Text {
+                text: "LED #1"
+                color: switchersEnabled ? fontColor_enabled : fontColor_disabled
+                font.pointSize: switchLabelFontSize
+            }
+            MySwitch {
+                enabled: switchersEnabled
+                checkedColor: switcherColor
+            }
+
+            Text {
+                text: "LED #2"
+                color: switchersEnabled ? fontColor_enabled : fontColor_disabled
+                font.pointSize: switchLabelFontSize
+            }
+            MySwitch {
+                enabled: switchersEnabled
+                checkedColor: switcherColor
+            }
+
+            Text {
+                text: "LED coolers"
+                color: switchersEnabled ? fontColor_enabled : fontColor_disabled
+                font.pointSize: switchLabelFontSize
+            }
+            MySwitch {
+                enabled: switchersEnabled
+                checkedColor: switcherColor
+            }
+
+            Text {
+                text: "Case coolers"
+                color: switchersEnabled ? fontColor_enabled : fontColor_disabled
+                font.pointSize: switchLabelFontSize
+            }
+            MySwitch {
+                enabled: switchersEnabled
+                checked: true
+                checkedColor: switcherColor
+            }
+        }
+
+        Button {
+            id: lockButton
+
+            checkable: true
+
+            display: AbstractButton.TextBesideIcon
+            text: lockButton.checked ? "Unlock" : "Lock"
+
+            height: 60
+            width: 200
+            anchors.top: parent.top
+            anchors.topMargin: 70
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            background: Rectangle {
+                color: "red"
+                radius: 10
+            }
+
+            onClicked: root.switchersEnabled = lockButton.checked
+        }
+    }
+}
