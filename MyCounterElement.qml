@@ -35,7 +35,7 @@ Item {
 
         anchors.horizontalCenter: baseRect.horizontalCenter
         anchors.top: baseRect.bottom
-        anchors.topMargin: 15
+        anchors.topMargin: 5
 
         text: root.timeIntervalName
         font.family: "Bahnschrift SemiLight SemiConde"

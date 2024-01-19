@@ -1,10 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>MyPage.qml</file>
         <file>Sunny logo.png</file>
-        <file>MyStatusBar.qml</file>
-        <file>MySpinbox.qml</file>
         <file>MainPage.qml</file>
         <file>PageSelectionButton.qml</file>
         <file>SystemDateTime.qml</file>

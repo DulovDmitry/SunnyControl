@@ -85,40 +85,6 @@ Item {
                 }
             }
         }
-
-//        width: parent.height
-//        height: parent.width
-//        anchors.centerIn: parent
-//        rotation: 90
-
-//        gradient:
-//            Gradient {
-//                GradientStop {
-//                    position: 1.0
-//                    color: {
-//                        if (isActive) { return barColor }
-//                        else { return Qt.rgba(0, 0, 0, 0) }
-//                    }
-//                }
-
-//                GradientStop {
-//                    position: 0.75
-//                    color: Qt.rgba(0, 0, 0, 0)
-//                }
-
-//                GradientStop {
-//                    position: 0.25
-//                    color: Qt.rgba(0, 0, 0, 0)
-//                }
-
-//                GradientStop {
-//                    position: 0
-//                    color: {
-//                        if (isActive) { return barColor }
-//                        else { return Qt.rgba(0, 0, 0, 0) }
-//                    }
-//                }
-//            }
     }
 
     Text {

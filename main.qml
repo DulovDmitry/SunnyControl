@@ -36,7 +36,6 @@ ApplicationWindow {
 
         anchors.fill: parent
 
-
     }
 
     ManualControlPage {
