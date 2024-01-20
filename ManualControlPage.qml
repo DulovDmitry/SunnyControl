@@ -33,8 +33,17 @@ Item {
                 font.pointSize: switchLabelFontSize
             }
             MySwitch {
+                id: led1_switch
                 enabled: switchersEnabled
                 checkedColor: switcherColor
+
+                onCheckedChanged: {
+                    if (led1_switch.checked === true) {
+                        ledOn()
+                    } else {
+                        ledOff()
+                    }
+                }
             }
 
             Text {
