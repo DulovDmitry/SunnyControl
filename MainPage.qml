@@ -4,14 +4,32 @@ import QtGraphicalEffects 1.0
 Item {
     id: root
 
+    signal reactorStatusChanged(int status)
+
     property color baseColor: "#F5F5F5"
-    property string pageText: "Page"
-    property int counterElementsSpacing: 120
-    property string headerText: "Planning exposure time"
     property color headerTextColor: "#002ABF"
+
+    property string pageText: "Page"
+    property string headerText_ready: "Planning exposure time"
+    property string headerText_working: "Remaining exposure time"
+
+    property string daysValue: "2"
+    property string hoursValue: "15"
+    property string minutesValue: "41"
+
     property int buttonsSpacing: 80
+    property int counterElementsSpacing: 120
+
     property bool warmUpButtonPressed: false
     property bool startButtonPressed: false
+
+    enum ReactorStatus {
+        Ready,
+        WarmingUp,
+        Working
+    }
+
+    property int currentStatus: MainPage.ReactorStatus.Ready
 
     Rectangle {
         anchors.fill: parent;
@@ -24,7 +42,7 @@ Item {
             anchors.top: parent.top
             anchors.topMargin: 80
 
-            text: root.headerText
+            text: root.currentStatus === MainPage.ReactorStatus.Working ? root.headerText_working : root.headerText_ready
             font.pixelSize: 52
             color: headerTextColor
         }
@@ -43,8 +61,10 @@ Item {
                 anchors.left: countersRow.left
                 anchors.verticalCenter: countersRow.verticalCenter
 
-                timeText: "2"
+                timeText: root.daysValue
                 timeIntervalName: "Days"
+
+                rectColor: currentStatus === MainPage.ReactorStatus.Working ? "#FFC7A7" : "#A7DFFF"
             }
 
             MyCounterElement {
@@ -52,8 +72,10 @@ Item {
                 anchors.horizontalCenter: countersRow.horizontalCenter
                 anchors.verticalCenter: countersRow.verticalCenter
 
-                timeText: "15"
+                timeText: root.hoursValue
                 timeIntervalName: "Hours"
+
+                rectColor: currentStatus === MainPage.ReactorStatus.Working ? "#FFC7A7" : "#A7DFFF"
             }
 
             MyCounterElement {
@@ -61,8 +83,10 @@ Item {
                 anchors.right: countersRow.right
                 anchors.verticalCenter: countersRow.verticalCenter
 
-                timeText: "41"
+                timeText: root.minutesValue
                 timeIntervalName: "Minutes"
+
+                rectColor: currentStatus === MainPage.ReactorStatus.Working ? "#FFC7A7" : "#A7DFFF"
             }
 
         }
@@ -153,6 +177,17 @@ Item {
                     anchors.fill: parent
                     onClicked: {
                         root.startButtonPressed =! root.startButtonPressed
+                        root.warmUpButtonPressed = false
+                        warmUpButtonColorChangingTimer.running = false
+                        warmUpButton.color = "#ededed"
+
+                        if (root.startButtonPressed) {
+                            root.currentStatus = MainPage.ReactorStatus.Working
+                        } else {
+                            root.currentStatus = MainPage.ReactorStatus.Ready
+                        }
+
+                        root.reactorStatusChanged(currentStatus)
                     }
                 }
             }

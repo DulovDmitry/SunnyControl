@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
+import QtGraphicalEffects 1.0
 
 Item {
     id: root
@@ -39,9 +40,9 @@ Item {
 
                 onCheckedChanged: {
                     if (led1_switch.checked === true) {
-                        ledOn()
+                        //ledOn()
                     } else {
-                        ledOff()
+                        //ledOff()
                     }
                 }
             }
@@ -102,6 +103,16 @@ Item {
             }
 
             onClicked: root.switchersEnabled = lockButton.checked
+        }
+
+        DropShadow {
+            anchors.fill: lockButton
+            cached: true
+            verticalOffset: 0
+            radius: 10
+            samples: 32
+            color: "#80808080"
+            source: lockButton
         }
     }
 }

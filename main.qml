@@ -15,9 +15,13 @@ ApplicationWindow {
         console.log("Clicked at " + pageNumber + " page")
 
         if (pageNumber === 0) { stackView.clear(); stackView.push(mainPage) }
-        else if (pageNumber === 1) { stackView.clear(); stackView.push(secondPage) }
+        else if (pageNumber === 1) { stackView.clear(); stackView.push(manualControlPage) }
         else if (pageNumber === 2) { stackView.clear(); stackView.push(thirdPage) }
         else if (pageNumber === 3) { stackView.clear(); stackView.push(fourthPage) }
+    }
+
+    function reactorStatusChanged(status) {
+        console.log(status)
     }
 
     StackView {
@@ -36,32 +40,33 @@ ApplicationWindow {
 
         anchors.fill: parent
 
+        onReactorStatusChanged: (status) => window.reactorStatusChanged(status)
     }
 
     ManualControlPage {
-        id: secondPage
+        id: manualControlPage
         visible: false
 
         anchors.fill: parent
     }
 
-    MainPage {
-        id: thirdPage
-        visible: false
+//    MainPage {
+//        id: thirdPage
+//        visible: false
 
-        pageText: "Page 3"
+//        pageText: "Page 3"
 
-        anchors.fill: parent
-    }
+//        anchors.fill: parent
+//    }
 
-    MainPage {
-        id: fourthPage
-        visible: false
+//    MainPage {
+//        id: fourthPage
+//        visible: false
 
-        pageText: "Page 4"
+//        pageText: "Page 4"
 
-        anchors.fill: parent
-    }
+//        anchors.fill: parent
+//    }
 
     PageSelectionBar {
         id: pageSelectionBar
