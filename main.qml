@@ -20,8 +20,8 @@ ApplicationWindow {
         else if (pageNumber === 3) { stackView.clear(); stackView.push(fourthPage) }
     }
 
-    function reactorStatusChanged(status) {
-        console.log(status)
+    function reactorStatusChanged() {
+        console.log(mainPage.reactorStatus)
     }
 
     StackView {
@@ -40,7 +40,8 @@ ApplicationWindow {
 
         anchors.fill: parent
 
-        onReactorStatusChanged: (status) => window.reactorStatusChanged(status)
+        //onReactorStatusChanged: (status) => window.reactorStatusChanged(status)
+        onReactorStatusChanged: window.reactorStatusChanged()
     }
 
     ManualControlPage {

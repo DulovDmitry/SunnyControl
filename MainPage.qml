@@ -4,7 +4,7 @@ import QtGraphicalEffects 1.0
 Item {
     id: root
 
-    signal reactorStatusChanged(int status)
+    //signal reactorStatusChanged(int status)
 
     property color baseColor: "#F5F5F5"
     property color headerTextColor: "#002ABF"
@@ -29,7 +29,7 @@ Item {
         Working
     }
 
-    property int currentStatus: MainPage.ReactorStatus.Ready
+    property int reactorStatus: MainPage.ReactorStatus.Ready
 
     Rectangle {
         anchors.fill: parent;
@@ -42,7 +42,7 @@ Item {
             anchors.top: parent.top
             anchors.topMargin: 80
 
-            text: root.currentStatus === MainPage.ReactorStatus.Working ? root.headerText_working : root.headerText_ready
+            text: root.reactorStatus === MainPage.ReactorStatus.Working ? root.headerText_working : root.headerText_ready
             font.pixelSize: 52
             color: headerTextColor
         }
@@ -64,7 +64,7 @@ Item {
                 timeText: root.daysValue
                 timeIntervalName: "Days"
 
-                rectColor: currentStatus === MainPage.ReactorStatus.Working ? "#FFC7A7" : "#A7DFFF"
+                rectColor: reactorStatus === MainPage.ReactorStatus.Working ? "#FFC7A7" : "#A7DFFF"
             }
 
             MyCounterElement {
@@ -75,7 +75,7 @@ Item {
                 timeText: root.hoursValue
                 timeIntervalName: "Hours"
 
-                rectColor: currentStatus === MainPage.ReactorStatus.Working ? "#FFC7A7" : "#A7DFFF"
+                rectColor: reactorStatus === MainPage.ReactorStatus.Working ? "#FFC7A7" : "#A7DFFF"
             }
 
             MyCounterElement {
@@ -86,7 +86,7 @@ Item {
                 timeText: root.minutesValue
                 timeIntervalName: "Minutes"
 
-                rectColor: currentStatus === MainPage.ReactorStatus.Working ? "#FFC7A7" : "#A7DFFF"
+                rectColor: reactorStatus === MainPage.ReactorStatus.Working ? "#FFC7A7" : "#A7DFFF"
             }
 
         }
@@ -104,30 +104,40 @@ Item {
             Rectangle {
                 id: warmUpButton
 
+                property bool blinky: false
+
                 width: 300
                 height: 80
                 anchors.left: parent.left
 
                 radius: 15
-                color: root.startButtonPressed ? "#ededed" : "#d9d9d9"
+                color: (root.reactorStatus === MainPage.ReactorStatus.Working) ? "#ededed" : (blinky) ? "#ffc875" : "#d9d9d9"
 
                 Text {
                     id: warmUpButtonText
                     anchors.centerIn: parent
 
-                    text: root.warmUpButtonPressed ? "Warming up" : "Warm up"
+                    text: (root.reactorStatus === MainPage.ReactorStatus.WarmingUp) ? "Warming up" : "Warm up"
                     font.pointSize: 32
 
-                    color: root.startButtonPressed ? "#acabab" : "#000000"
+                    color: (root.reactorStatus === MainPage.ReactorStatus.Working) ? "#acabab" : "#333333"
                 }
 
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        if (!root.startButtonPressed) {
-                            root.warmUpButtonPressed =! root.warmUpButtonPressed
-                            warmUpButton.color = "#d9d9d9"
-                            warmUpButtonColorChangingTimer.running = root.warmUpButtonPressed ? true : false
+                        if (root.startButtonPressed) return
+
+                        root.warmUpButtonPressed = !root.warmUpButtonPressed
+                        warmUpButtonColorChangingTimer.running = root.warmUpButtonPressed
+                        console.log("warmUpButtonPressed = " + root.warmUpButtonPressed)
+                        console.log("startButtonPressed = " + root.startButtonPressed)
+
+                        if (root.warmUpButtonPressed) {
+                            root.reactorStatus = MainPage.ReactorStatus.WarmingUp
+                            //warmUpButton.color = "#d9d9d9"
+                        } else {
+                            root.reactorStatus = MainPage.ReactorStatus.Ready
                         }
                     }
                 }
@@ -140,7 +150,8 @@ Item {
                     running: false
 
                     onTriggered: {
-                        warmUpButton.color = (warmUpButton.color == "#d9d9d9") ? "#ffc875" : "#d9d9d9"
+                        //warmUpButton.color = (warmUpButton.color == "#d9d9d9") ? "#ffc875" : "#d9d9d9"
+                        warmUpButton.blinky = !warmUpButton.blinky
                     }
                 }
             }
@@ -179,15 +190,15 @@ Item {
                         root.startButtonPressed =! root.startButtonPressed
                         root.warmUpButtonPressed = false
                         warmUpButtonColorChangingTimer.running = false
-                        warmUpButton.color = "#ededed"
+                        //warmUpButton.color = "#ededed"
 
                         if (root.startButtonPressed) {
-                            root.currentStatus = MainPage.ReactorStatus.Working
+                            root.reactorStatus = MainPage.ReactorStatus.Working
                         } else {
-                            root.currentStatus = MainPage.ReactorStatus.Ready
+                            root.reactorStatus = MainPage.ReactorStatus.Ready
                         }
 
-                        root.reactorStatusChanged(currentStatus)
+                        //root.reactorStatusChanged(reactorStatus)
                     }
                 }
             }
