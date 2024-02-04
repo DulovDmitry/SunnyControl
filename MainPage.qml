@@ -13,15 +13,17 @@ Item {
     property string headerText_ready: "Planning exposure time"
     property string headerText_working: "Remaining exposure time"
 
-    property string daysValue: "2"
-    property string hoursValue: "15"
-    property string minutesValue: "41"
+    property int daysValue: 0
+    property int hoursValue: 0
+    property int minutesValue: 1
 
     property int buttonsSpacing: 80
     property int counterElementsSpacing: 120
 
     property bool warmUpButtonPressed: false
     property bool startButtonPressed: false
+
+    property date startTime
 
     enum ReactorStatus {
         Ready,
@@ -30,6 +32,10 @@ Item {
     }
 
     property int reactorStatus: MainPage.ReactorStatus.Ready
+
+    function getMinutes() {
+        return root.minutesValue + root.hoursValue*60 + root.daysValue*24*60
+    }
 
     Rectangle {
         anchors.fill: parent;
@@ -61,7 +67,7 @@ Item {
                 anchors.left: countersRow.left
                 anchors.verticalCenter: countersRow.verticalCenter
 
-                timeText: root.daysValue
+                timeText: root.daysValue.toString()
                 timeIntervalName: "Days"
 
                 rectColor: reactorStatus === MainPage.ReactorStatus.Working ? "#FFC7A7" : "#A7DFFF"
@@ -72,7 +78,7 @@ Item {
                 anchors.horizontalCenter: countersRow.horizontalCenter
                 anchors.verticalCenter: countersRow.verticalCenter
 
-                timeText: root.hoursValue
+                timeText: root.hoursValue.toString()
                 timeIntervalName: "Hours"
 
                 rectColor: reactorStatus === MainPage.ReactorStatus.Working ? "#FFC7A7" : "#A7DFFF"
@@ -83,7 +89,7 @@ Item {
                 anchors.right: countersRow.right
                 anchors.verticalCenter: countersRow.verticalCenter
 
-                timeText: root.minutesValue
+                timeText: root.minutesValue.toString()
                 timeIntervalName: "Minutes"
 
                 rectColor: reactorStatus === MainPage.ReactorStatus.Working ? "#FFC7A7" : "#A7DFFF"
@@ -111,7 +117,7 @@ Item {
                 anchors.left: parent.left
 
                 radius: 15
-                color: (root.reactorStatus === MainPage.ReactorStatus.Working) ? "#ededed" : (blinky) ? "#ffc875" : "#d9d9d9"
+                color: (root.reactorStatus === MainPage.ReactorStatus.Working) ? "#ededed" : (blinky ? "#ffc875" : "#d9d9d9")
 
                 Text {
                     id: warmUpButtonText
@@ -124,12 +130,16 @@ Item {
                 }
 
                 MouseArea {
+                    id: warmUpButtonMouseArea
+
                     anchors.fill: parent
+
                     onClicked: {
                         if (root.startButtonPressed) return
 
                         root.warmUpButtonPressed = !root.warmUpButtonPressed
                         warmUpButtonColorChangingTimer.running = root.warmUpButtonPressed
+                        warmUpButton.blinky = root.warmUpButtonPressed
                         console.log("warmUpButtonPressed = " + root.warmUpButtonPressed)
                         console.log("startButtonPressed = " + root.startButtonPressed)
 
@@ -185,17 +195,24 @@ Item {
                 }
 
                 MouseArea {
+                    id: startButtonMouseArea
+
                     anchors.fill: parent
+
                     onClicked: {
                         root.startButtonPressed =! root.startButtonPressed
                         root.warmUpButtonPressed = false
                         warmUpButtonColorChangingTimer.running = false
+                        warmUpButton.blinky = false
                         //warmUpButton.color = "#ededed"
 
                         if (root.startButtonPressed) {
                             root.reactorStatus = MainPage.ReactorStatus.Working
+                            root.startTime = new Date()
+                            remainingTimeTimer.running = true
                         } else {
                             root.reactorStatus = MainPage.ReactorStatus.Ready
+                            remainingTimeTimer.running = false
                         }
 
                         //root.reactorStatusChanged(reactorStatus)
@@ -211,6 +228,22 @@ Item {
                 samples: 16
                 color: "#80808080"
                 source: startButton
+            }
+
+            Timer {
+                id: remainingTimeTimer
+
+                interval: 1000
+                repeat: true
+                running: false
+
+                onTriggered: {
+                    let currentTime = new Date()
+                    let deltaTime = getMinutes()*60 - (currentTime - root.startTime) / 1000
+                    console.log(deltaTime)
+
+                    if (deltaTime < 0) {startButtonMouseArea.clicked(Qt.MouseEventCreatedDoubleClick)}
+                }
             }
         }
     }

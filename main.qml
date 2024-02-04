@@ -22,6 +22,7 @@ ApplicationWindow {
 
     function reactorStatusChanged() {
         console.log(mainPage.reactorStatus)
+        statusBar.status = mainPage.reactorStatus
     }
 
     StackView {
@@ -36,11 +37,8 @@ ApplicationWindow {
         id: mainPage
         visible: false
 
-        pageText: "Page 1"
-
         anchors.fill: parent
 
-        //onReactorStatusChanged: (status) => window.reactorStatusChanged(status)
         onReactorStatusChanged: window.reactorStatusChanged()
     }
 
