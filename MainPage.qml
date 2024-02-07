@@ -5,6 +5,7 @@ Item {
     id: root
 
     //signal reactorStatusChanged(int status)
+    signal counterClicked(int number)
 
     property color baseColor: "#F5F5F5"
     property color headerTextColor: "#002ABF"
@@ -71,6 +72,15 @@ Item {
                 timeIntervalName: "Days"
 
                 rectColor: reactorStatus === MainPage.ReactorStatus.Working ? "#FFC7A7" : "#A7DFFF"
+            }
+
+            MouseArea {
+                id: counterElement_1_MouseArea
+                anchors.fill: counterElement_1
+
+                onClicked: {
+                    root.counterClicked(1)
+                }
             }
 
             MyCounterElement {

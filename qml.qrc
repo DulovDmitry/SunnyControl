@@ -12,5 +12,6 @@
         <file>icons/locked_256.png</file>
         <file>icons/unlocked_256.png</file>
         <file>MyCounterElement.qml</file>
+        <file>NumberKeyboard.qml</file>
     </qresource>
 </RCC>

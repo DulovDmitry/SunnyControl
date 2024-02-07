@@ -1,7 +1,7 @@
 import QtQuick 2.12
 
 Item {
-    id:root
+    id: root
 
     property color rectColor: "#A7DFFF"
     property string timeText: "0"

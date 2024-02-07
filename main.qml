@@ -11,6 +11,8 @@ ApplicationWindow {
     color: "black"
     flags: Qt.FramelessWindowHint
 
+    property var numberKeyboardDialogHolder: null
+
     function pageSelectionButtonClicked(pageNumber) {
         console.log("Clicked at " + pageNumber + " page")
 
@@ -24,6 +26,23 @@ ApplicationWindow {
         console.log(mainPage.reactorStatus)
         statusBar.status = mainPage.reactorStatus
     }
+
+    function createNumberKeyboardDialog(number) {
+        if (numberKeyboardDialogHolder === null) {
+            var component = Qt.createComponent("NumberKeyboard.qml")
+            numberKeyboardDialogHolder = component.createObject(window, {"x":0, "y":0})
+//            if (numberKeyboardDialogHolder) {
+//            }
+        }
+    }
+
+    function destroyNumberKeyboardDialog() {
+        if (numberKeyboardDialogHolder !== null) {
+            numberKeyboardDialogHolder.destroy()
+            numberKeyboardDialogHolder = null
+        }
+    }
+
 
     StackView {
         id: stackView
@@ -40,6 +59,7 @@ ApplicationWindow {
         anchors.fill: parent
 
         onReactorStatusChanged: window.reactorStatusChanged()
+        onCounterClicked: (number) => window.createNumberKeyboardDialog(number)
     }
 
     ManualControlPage {
