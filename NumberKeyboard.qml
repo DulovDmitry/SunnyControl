@@ -1,29 +1,41 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.0
 import QtQuick.Shapes 1.15
+import QtGraphicalEffects 1.0
 
 Rectangle {
     id: root
     anchors.fill: parent
 
-    function updateDisplayedNumber(number) {
-        if (textField.text > 100) return
+    signal sendValue(int value)
+    signal destroyMe()
 
-        textField.text = (textField.text === '0') ? number.toString() : textField.text + number.toString()
+    function updateDisplayedNumber(number) {
+        if (root.displayedNumber > 100) return
+
+        displayedNumber = displayedNumber*10 + number
     }
 
+    property int displayedNumber: 0
+
     color: Qt.rgba(0, 0, 0, 0.33)
+
+    MouseArea {
+        anchors.fill: root
+        onClicked: destroyMe()
+    }
+
+    MouseArea {
+        anchors.fill: baseRect
+        onClicked: {
+        }
+    }
 
     Rectangle {
         id: baseRect
 
-        property real buttonHeight: (baseRect.height - textBackgroundRect.height - grid.rowSpacing*3) / 4
+        property real buttonHeight: (baseRect.height - textBackgroundRect.height - grid.rowSpacing*3 - grid.anchors.topMargin) / 4
         property real buttonWidth: (baseRect.width - grid.columnSpacing*2 ) / 3
-
-        property int displayedNumber: 0
-
-        property color buttonColor: "#ff0000"
-
 
         anchors.centerIn: parent
         height: 450
@@ -64,7 +76,7 @@ Rectangle {
                 anchors.right: parent.right
                 anchors.rightMargin: 25
 
-                text: baseRect.displayedNumber.toString()
+                text: root.displayedNumber.toString()
                 color: "#0C2D57"
                 font.pointSize: 60
             }
@@ -177,9 +189,8 @@ Rectangle {
 
                 background: Shape {
                     ShapePath {
-                        strokeWidth: 0
-                        strokeColor: "black"
-                        fillColor: "black"
+                        strokeWidth: -1
+                        fillColor: "#e05144"
 
                         startX: 0; startY: 0
                         PathLine { x: button_cancel.width; y: 0 }
@@ -193,7 +204,7 @@ Rectangle {
                     }
                 }
 
-                onClicked: root.updateDisplayedNumber(number)
+                onClicked: root.destroyMe()
             }
 
             MyNumberButton {
@@ -214,9 +225,8 @@ Rectangle {
 
                 background: Shape {
                     ShapePath {
-                        strokeWidth: 0
-                        strokeColor: "black"
-                        fillColor: "black"
+                        strokeWidth: -1
+                        fillColor: "#CEFF9D"
 
                         startX: 0; startY: 0
                         PathLine { x: button_cancel.width; y: 0 }
@@ -230,8 +240,23 @@ Rectangle {
                     }
                 }
 
-                onClicked: root.updateDisplayedNumber(number)
+                onClicked: {
+                    sendValue(root.displayedNumber)
+                    destroyMe()
+                }
             }
         }
+    }
+
+    DropShadow {
+        anchors.fill: baseRect
+        cached: true
+        verticalOffset: 0
+        transparentBorder: true
+        radius: 25
+        samples: 50
+        spread: 0.5
+        color: "#30000000"
+        source: baseRect
     }
 }

@@ -31,8 +31,10 @@ ApplicationWindow {
         if (numberKeyboardDialogHolder === null) {
             var component = Qt.createComponent("NumberKeyboard.qml")
             numberKeyboardDialogHolder = component.createObject(window, {"x":0, "y":0})
-//            if (numberKeyboardDialogHolder) {
-//            }
+            if (numberKeyboardDialogHolder) {
+                numberKeyboardDialogHolder.destroyMe.connect(window.destroyNumberKeyboardDialog)
+                numberKeyboardDialogHolder.sendValue.connect(window.setCounterValue)
+            }
         }
     }
 
@@ -43,6 +45,12 @@ ApplicationWindow {
         }
     }
 
+    function setCounterValue(value) {
+        if (value > 99) value = 99
+
+        console.log(value)
+        mainPage.hoursValue = value
+    }
 
     StackView {
         id: stackView
