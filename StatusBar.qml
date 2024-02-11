@@ -13,7 +13,11 @@ Rectangle {
 
     property string text_ready: "Photoreactor is ready to work"
     property string text_warmingUp: "Photoreactor is warming up"
-    property string text_working: "Photoreactor is working"
+    property string text_working: "Photoreactor is working. Estimated finish time: " + Qt.formatTime(finishTime, timeFormat) + ", " + Qt.formatDate(finishTime, dateFormat)
+
+    property date finishTime: new Date()
+    property string timeFormat: "hh:mm"
+    property string dateFormat: "dd.MM.yy"
 
     width: parent.width
     height: 50

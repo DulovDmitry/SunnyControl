@@ -14,6 +14,21 @@ Item {
 
     property int switchLabelFontSize: 30
 
+    function changeSwitchersState(reactorStatus) {
+        console.log("ManualControlPage, changeSwitchersState ", reactorStatus)
+        if (reactorStatus === MainPage.ReactorStatus.Ready) {
+            led1_switch.checked = false
+            led2_switch.checked = false
+            coolers_switch.checked = false
+            //root.switchersEnabled = false
+        } else {
+            led1_switch.checked = true
+            led2_switch.checked = true
+            coolers_switch.checked = true
+            //root.switchersEnabled = false
+        }
+    }
+
     Rectangle {
         id: baseRectangle
         anchors.fill: parent;
@@ -53,6 +68,7 @@ Item {
                 font.pointSize: switchLabelFontSize
             }
             MySwitch {
+                id: led2_switch
                 enabled: switchersEnabled
                 checkedColor: switcherColor
             }
@@ -63,6 +79,7 @@ Item {
                 font.pointSize: switchLabelFontSize
             }
             MySwitch {
+                id: coolers_switch
                 enabled: switchersEnabled
                 checkedColor: switcherColor
             }
@@ -73,8 +90,8 @@ Item {
                 font.pointSize: switchLabelFontSize
             }
             MySwitch {
+                id: fans_switch
                 enabled: switchersEnabled
-                checked: true
                 checkedColor: switcherColor
             }
         }
@@ -82,13 +99,13 @@ Item {
         Button {
             id: lockButton
 
-            checkable: true
+            //checkable: true
 
             display: AbstractButton.TextBesideIcon
-            text: lockButton.checked ? "Unlocked" : "Locked"
+            text: root.switchersEnabled ? "Unlocked" : "Locked"
             font.pointSize: 15
 
-            icon.source: lockButton.checked ? "qrc:/icons/unlocked_256.png" : "qrc:/icons/locked_256.png"
+            icon.source: root.switchersEnabled ? "qrc:/icons/unlocked_256.png" : "qrc:/icons/locked_256.png"
 
             height: 60
             width: 150
@@ -98,17 +115,16 @@ Item {
             anchors.rightMargin: 20
 
             background: Rectangle {
-                color: lockButton.checked ? "#d9d9d9" : "#ffc875"
+                color: root.switchersEnabled ? "#d9d9d9" : "#ffc875"
                 radius: 10
             }
 
-            onClicked: root.switchersEnabled = lockButton.checked
+            onClicked: root.switchersEnabled = !root.switchersEnabled
         }
 
         DropShadow {
             anchors.fill: lockButton
             cached: true
-            verticalOffset: 0
             radius: 10
             samples: 32
             color: "#80808080"

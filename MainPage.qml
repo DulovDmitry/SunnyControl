@@ -5,7 +5,7 @@ Item {
     id: root
 
     //signal reactorStatusChanged(int status)
-    signal counterClicked(int number)
+    signal counterClicked(int counterIdentifier)
 
     property color baseColor: "#F5F5F5"
     property color headerTextColor: "#002ABF"
@@ -14,9 +14,12 @@ Item {
     property string headerText_ready: "Planning exposure time"
     property string headerText_working: "Remaining exposure time"
 
-    property int daysValue: 0
-    property int hoursValue: 0
-    property int minutesValue: 1
+    property int daysValue_displayed: 0
+    property int hoursValue_displayed: 0
+    property int minutesValue_displayed: 0
+    property int daysValue_scheduled: 0
+    property int hoursValue_scheduled: 0
+    property int minutesValue_scheduled: 0
 
     property int buttonsSpacing: 80
     property int counterElementsSpacing: 120
@@ -25,6 +28,7 @@ Item {
     property bool startButtonPressed: false
 
     property date startTime
+    property date endTime
 
     enum ReactorStatus {
         Ready,
@@ -35,7 +39,7 @@ Item {
     property int reactorStatus: MainPage.ReactorStatus.Ready
 
     function getMinutes() {
-        return root.minutesValue + root.hoursValue*60 + root.daysValue*24*60
+        return root.minutesValue_scheduled + root.hoursValue_scheduled*60 + root.daysValue_scheduled*24*60
     }
 
     Rectangle {
@@ -68,19 +72,11 @@ Item {
                 anchors.left: countersRow.left
                 anchors.verticalCenter: countersRow.verticalCenter
 
-                timeText: root.daysValue.toString()
+                timeText: root.daysValue_displayed.toString()
                 timeIntervalName: "Days"
+                timeIntervalIdentifier: MyCounterElement.TimeIntervalName.Days
 
                 rectColor: reactorStatus === MainPage.ReactorStatus.Working ? "#FFC7A7" : "#A7DFFF"
-            }
-
-            MouseArea {
-                id: counterElement_1_MouseArea
-                anchors.fill: counterElement_1
-
-                onClicked: {
-                    root.counterClicked(1)
-                }
             }
 
             MyCounterElement {
@@ -88,8 +84,9 @@ Item {
                 anchors.horizontalCenter: countersRow.horizontalCenter
                 anchors.verticalCenter: countersRow.verticalCenter
 
-                timeText: root.hoursValue.toString()
+                timeText: root.hoursValue_displayed.toString()
                 timeIntervalName: "Hours"
+                timeIntervalIdentifier: MyCounterElement.TimeIntervalName.Hours
 
                 rectColor: reactorStatus === MainPage.ReactorStatus.Working ? "#FFC7A7" : "#A7DFFF"
             }
@@ -99,10 +96,41 @@ Item {
                 anchors.right: countersRow.right
                 anchors.verticalCenter: countersRow.verticalCenter
 
-                timeText: root.minutesValue.toString()
+                timeText: root.minutesValue_displayed.toString()
                 timeIntervalName: "Minutes"
+                timeIntervalIdentifier: MyCounterElement.TimeIntervalName.Minutes
 
                 rectColor: reactorStatus === MainPage.ReactorStatus.Working ? "#FFC7A7" : "#A7DFFF"
+            }
+
+            MouseArea {
+                id: counterElement_1_MouseArea
+                anchors.fill: counterElement_1
+
+                onClicked: {
+                    if (reactorStatus === MainPage.ReactorStatus.Working) return
+                    root.counterClicked(counterElement_1.timeIntervalIdentifier)
+                }
+            }
+
+            MouseArea {
+                id: counterElement_2_MouseArea
+                anchors.fill: counterElement_2
+
+                onClicked: {
+                    if (reactorStatus === MainPage.ReactorStatus.Working) return
+                    root.counterClicked(counterElement_2.timeIntervalIdentifier)
+                }
+            }
+
+            MouseArea {
+                id: counterElement_3_MouseArea
+                anchors.fill: counterElement_3
+
+                onClicked: {
+                    if (reactorStatus === MainPage.ReactorStatus.Working) return
+                    root.counterClicked(counterElement_3.timeIntervalIdentifier)
+                }
             }
 
         }
@@ -210,6 +238,8 @@ Item {
                     anchors.fill: parent
 
                     onClicked: {
+                        if ((root.daysValue_displayed + root.hoursValue_displayed + root.minutesValue_displayed) === 0) return
+
                         root.startButtonPressed =! root.startButtonPressed
                         root.warmUpButtonPressed = false
                         warmUpButtonColorChangingTimer.running = false
@@ -217,12 +247,24 @@ Item {
                         //warmUpButton.color = "#ededed"
 
                         if (root.startButtonPressed) {
-                            root.reactorStatus = MainPage.ReactorStatus.Working
+                            root.daysValue_scheduled = root.daysValue_displayed
+                            root.hoursValue_scheduled = root.hoursValue_displayed
+                            root.minutesValue_scheduled = root.minutesValue_displayed
+
                             root.startTime = new Date()
+                            root.endTime = new Date(startTime.getTime() + getMinutes()*60*1000);
+                            console.log("start time", root.startTime)
+                            console.log("end time", endTime)
                             remainingTimeTimer.running = true
+
+                            root.reactorStatus = MainPage.ReactorStatus.Working
                         } else {
                             root.reactorStatus = MainPage.ReactorStatus.Ready
                             remainingTimeTimer.running = false
+
+                            root.daysValue_displayed = root.daysValue_scheduled
+                            root.hoursValue_displayed = root.hoursValue_scheduled
+                            root.minutesValue_displayed = root.minutesValue_scheduled
                         }
 
                         //root.reactorStatusChanged(reactorStatus)
@@ -243,16 +285,24 @@ Item {
             Timer {
                 id: remainingTimeTimer
 
-                interval: 1000
+                interval: 60000
                 repeat: true
                 running: false
 
                 onTriggered: {
                     let currentTime = new Date()
-                    let deltaTime = getMinutes()*60 - (currentTime - root.startTime) / 1000
+                    let deltaTime = getMinutes()*60 - (currentTime - root.startTime) / 1000 // remaining time in seconds
                     console.log(deltaTime)
 
-                    if (deltaTime < 0) {startButtonMouseArea.clicked(Qt.MouseEventCreatedDoubleClick)}
+                    let minutes = Math.floor(((deltaTime+60)/60) % 60)
+                    let hours = Math.floor((deltaTime+60)/60/60 % 24)
+                    let days = Math.floor((deltaTime+60)/60/60/24)
+
+                    root.daysValue_displayed = days.toString()
+                    root.hoursValue_displayed = hours.toString()
+                    root.minutesValue_displayed = minutes.toString()
+
+                    if (deltaTime <= 0) {startButtonMouseArea.clicked(Qt.MouseEventCreatedDoubleClick)}
                 }
             }
         }

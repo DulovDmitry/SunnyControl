@@ -10,13 +10,14 @@ Rectangle {
     signal sendValue(int value)
     signal destroyMe()
 
+    property int displayedNumber: 0
+    property int counterToBeChanged: 0
+
     function updateDisplayedNumber(number) {
         if (root.displayedNumber > 100) return
 
         displayedNumber = displayedNumber*10 + number
     }
-
-    property int displayedNumber: 0
 
     color: Qt.rgba(0, 0, 0, 0.33)
 
@@ -63,7 +64,7 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
             width: parent.width
-            height: 130
+            height: 150
 
             color: "#fefefe"
 
@@ -190,7 +191,7 @@ Rectangle {
                 background: Shape {
                     ShapePath {
                         strokeWidth: -1
-                        fillColor: "#e05144"
+                        fillColor: "#ff7373"
 
                         startX: 0; startY: 0
                         PathLine { x: button_cancel.width; y: 0 }
@@ -202,6 +203,13 @@ Rectangle {
                         }
                         PathLine { x: 0; y: 0 }
                     }
+                }
+
+                Image {
+                    source: "qrc:/icons/decline.png"
+                    anchors.centerIn: parent
+                    height: 40
+                    width: 40
                 }
 
                 onClicked: root.destroyMe()
@@ -226,7 +234,7 @@ Rectangle {
                 background: Shape {
                     ShapePath {
                         strokeWidth: -1
-                        fillColor: "#CEFF9D"
+                        fillColor: "#a0db8e"
 
                         startX: 0; startY: 0
                         PathLine { x: button_cancel.width; y: 0 }
@@ -238,6 +246,13 @@ Rectangle {
                         PathLine { x: 0 ; y: button_cancel.height }
                         PathLine { x: 0; y: 0 }
                     }
+                }
+
+                Image {
+                    source: "qrc:/icons/ok.png"
+                    anchors.centerIn: parent
+                    height: 40
+                    width: 40
                 }
 
                 onClicked: {

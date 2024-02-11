@@ -6,6 +6,13 @@ Item {
     property color rectColor: "#A7DFFF"
     property string timeText: "0"
     property string timeIntervalName: "Days"
+    property int timeIntervalIdentifier: 0
+
+    enum TimeIntervalName {
+        Days,
+        Hours,
+        Minutes
+    }
 
     width: baseRect.width
     height: baseRect.height

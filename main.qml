@@ -14,7 +14,7 @@ ApplicationWindow {
     property var numberKeyboardDialogHolder: null
 
     function pageSelectionButtonClicked(pageNumber) {
-        console.log("Clicked at " + pageNumber + " page")
+        manualControlPage.switchersEnabled = false
 
         if (pageNumber === 0) { stackView.clear(); stackView.push(mainPage) }
         else if (pageNumber === 1) { stackView.clear(); stackView.push(manualControlPage) }
@@ -23,15 +23,15 @@ ApplicationWindow {
     }
 
     function reactorStatusChanged() {
-        console.log(mainPage.reactorStatus)
         statusBar.status = mainPage.reactorStatus
     }
 
-    function createNumberKeyboardDialog(number) {
+    function createNumberKeyboardDialog(counterIdentifier) {
         if (numberKeyboardDialogHolder === null) {
             var component = Qt.createComponent("NumberKeyboard.qml")
             numberKeyboardDialogHolder = component.createObject(window, {"x":0, "y":0})
             if (numberKeyboardDialogHolder) {
+                numberKeyboardDialogHolder.counterToBeChanged = counterIdentifier
                 numberKeyboardDialogHolder.destroyMe.connect(window.destroyNumberKeyboardDialog)
                 numberKeyboardDialogHolder.sendValue.connect(window.setCounterValue)
             }
@@ -46,10 +46,18 @@ ApplicationWindow {
     }
 
     function setCounterValue(value) {
-        if (value > 99) value = 99
+        if (numberKeyboardDialogHolder === null) return
 
-        console.log(value)
-        mainPage.hoursValue = value
+        if (numberKeyboardDialogHolder.counterToBeChanged === MyCounterElement.TimeIntervalName.Days) {
+            if (value > 99) value = 99
+            mainPage.daysValue_displayed = value
+        } else if (numberKeyboardDialogHolder.counterToBeChanged === MyCounterElement.TimeIntervalName.Hours) {
+            if (value > 23) value = 23
+            mainPage.hoursValue_displayed = value
+        } else if (numberKeyboardDialogHolder.counterToBeChanged === MyCounterElement.TimeIntervalName.Minutes) {
+            if (value > 59) value = 59
+            mainPage.minutesValue_displayed = value
+        }
     }
 
     StackView {
@@ -66,8 +74,12 @@ ApplicationWindow {
 
         anchors.fill: parent
 
-        onReactorStatusChanged: window.reactorStatusChanged()
-        onCounterClicked: (number) => window.createNumberKeyboardDialog(number)
+        onReactorStatusChanged: {
+            window.reactorStatusChanged()
+            manualControlPage.changeSwitchersState(mainPage.reactorStatus)
+            statusBar.finishTime = mainPage.endTime
+        }
+        onCounterClicked: (counterIdentifier) => window.createNumberKeyboardDialog(counterIdentifier)
     }
 
     ManualControlPage {
@@ -105,6 +117,7 @@ ApplicationWindow {
         baseColor: "#DFDFDF"
 
         onButtonClicked: (pageNumber) => pageSelectionButtonClicked(pageNumber)
+
     }
 
     StatusBar {
