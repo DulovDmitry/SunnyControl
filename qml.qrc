@@ -16,5 +16,6 @@
         <file>MyNumberButton.qml</file>
         <file>icons/decline.png</file>
         <file>icons/ok.png</file>
+        <file>LogsPage.qml</file>
     </qresource>
 </RCC>

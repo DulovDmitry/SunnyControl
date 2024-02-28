@@ -55,9 +55,9 @@ Item {
 
                 onCheckedChanged: {
                     if (led1_switch.checked === true) {
-                        //ledOn()
+                        ledOn()
                     } else {
-                        //ledOff()
+                        ledOff()
                     }
                 }
             }

@@ -75,7 +75,7 @@ Rectangle {
         pageNumber: 2
 
         isActive: false
-        buttonText: "Info"
+        buttonText: "Log"
         fontSize: parent.fontSize
         buttonHeight: parent.buttonHeight
 
@@ -92,7 +92,7 @@ Rectangle {
         pageNumber: 3
 
         isActive: false
-        buttonText: "Stirring"
+        buttonText: "Settings"
         fontSize: parent.fontSize
         buttonHeight: parent.buttonHeight
 

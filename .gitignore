@@ -2,3 +2,5 @@ SunnyControl.pro.user
 SunnyControl.pro
 *.sh
 *.ai
+appengine.h
+appengine.cpp

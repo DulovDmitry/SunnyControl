@@ -89,14 +89,12 @@ ApplicationWindow {
         anchors.fill: parent
     }
 
-//    MainPage {
-//        id: thirdPage
-//        visible: false
+    LogsPage {
+        id: thirdPage
+        visible: false
 
-//        pageText: "Page 3"
-
-//        anchors.fill: parent
-//    }
+        anchors.fill: parent
+    }
 
 //    MainPage {
 //        id: fourthPage

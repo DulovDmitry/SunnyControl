@@ -2,7 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
-//#include "appengine.h"
+#include "appengine.h"
 
 int main(int argc, char *argv[])
 {
@@ -18,8 +18,9 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
 
-    //AppEngine appEngine;
-    //engine.rootContext()->setContextObject(&appEngine);
+    AppEngine appEngine;
+    engine.rootContext()->setContextObject(&appEngine);
+    engine.rootContext()->setContextProperty("logText", appEngine.appEngineProperty_logText);
 
     engine.load(url);
 
