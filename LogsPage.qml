@@ -34,9 +34,10 @@ Item {
 
                 TextArea {
                     id: textArea
-                    text: logText
+                    text: logText   // property from AppEngine class
                     font.pointSize: 15
-
+                    color: "black"
+                    enabled: false
                 }
             }
         }

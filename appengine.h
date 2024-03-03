@@ -3,9 +3,12 @@
 
 #include <QObject>
 #include <QDebug>
+#include <QDateTime>
 
-//#include <wiringPi.h>
-//#include "/home/sunny/wiringOP/wiringPi/wiringPi.h"
+#ifdef Q_OS_LINUX
+#include <wiringPi.h>
+#include "/home/sunny/wiringOP/wiringPi/wiringPi.h"
+#endif
 
 class AppEngine : public QObject
 {
@@ -13,16 +16,32 @@ class AppEngine : public QObject
 public:
     explicit AppEngine(QObject *parent = nullptr);
 
-    Q_INVOKABLE void ledOn();
-    Q_INVOKABLE void ledOff();
-    Q_INVOKABLE void ledFansOn();
-    Q_INVOKABLE void ledFansOff();
+    Q_INVOKABLE void led1On();
+    Q_INVOKABLE void led1Off();
+    Q_INVOKABLE void led2On();
+    Q_INVOKABLE void led2Off();
+    Q_INVOKABLE void ledCoolersOn();
+    Q_INVOKABLE void ledCoolersOff();
     Q_INVOKABLE void caseFansOn();
     Q_INVOKABLE void caseFansOff();
 
-    QString appEngineProperty_logText;
+    QString logText() {return m_logText;}
+    const QString &dateTimeFormat() const;
+
+    Q_PROPERTY(QString logText READ logText WRITE writeToLog NOTIFY logTextChanged)
+    Q_PROPERTY(QString dateTimeFormat READ dateTimeFormat CONSTANT)
+
+public slots:
+    void writeToLog(QString logInfo);
+
+private:
+    QString m_logText;
+    QString m_dateTimeFormat;
+    QDateTime m_dateTime;
+
 
 signals:
+    void logTextChanged();
 
 };
 

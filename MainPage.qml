@@ -11,8 +11,8 @@ Item {
     property color headerTextColor: "#002ABF"
 
     property string pageText: "Page"
-    property string headerText_ready: "Planning exposure time"
-    property string headerText_working: "Remaining exposure time"
+    property string headerText_ready: "Planning work time"
+    property string headerText_working: "Remaining work time"
 
     property int daysValue_displayed: 0
     property int hoursValue_displayed: 0
@@ -40,6 +40,20 @@ Item {
 
     function getMinutes() {
         return root.minutesValue_scheduled + root.hoursValue_scheduled*60 + root.daysValue_scheduled*24*60
+    }
+
+    onReactorStatusChanged: {
+        let text = "Reactor status changed: "
+
+        if (reactorStatus === MainPage.ReactorStatus.Ready) {
+            text += "Ready"
+        } else if (reactorStatus === MainPage.ReactorStatus.WarmingUp) {
+            text += "Warming up"
+        } else if (reactorStatus === MainPage.ReactorStatus.Working) {
+            text += "Working"
+        }
+
+        writeToLog(text)
     }
 
     Rectangle {
@@ -155,7 +169,7 @@ Item {
                 anchors.left: parent.left
 
                 radius: 15
-                color: (root.reactorStatus === MainPage.ReactorStatus.Working) ? "#ededed" : (blinky ? "#ffc875" : "#d9d9d9")
+                color: (root.reactorStatus === MainPage.ReactorStatus.Working) ? "#ededed" : (blinky ? "#ffc875" : "#FFEFC6")
 
                 Text {
                     id: warmUpButtonText
@@ -258,6 +272,19 @@ Item {
                             remainingTimeTimer.running = true
 
                             root.reactorStatus = MainPage.ReactorStatus.Working
+
+                            let text = "The photoreactor has been scheduled for "
+                            if (root.daysValue_displayed) {
+                                text += root.daysValue_displayed + " days "
+                            }
+                            if (root.hoursValue_displayed) {
+                                text += root.hoursValue_displayed + " hours "
+                            }
+                            if (root.minutesValue_displayed) {
+                                text += root.minutesValue_displayed + " minutes "
+                            }
+
+                            writeToLog(text)
                         } else {
                             root.reactorStatus = MainPage.ReactorStatus.Ready
                             remainingTimeTimer.running = false

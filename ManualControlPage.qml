@@ -55,9 +55,9 @@ Item {
 
                 onCheckedChanged: {
                     if (led1_switch.checked === true) {
-                        ledOn()
+                        led1On()
                     } else {
-                        ledOff()
+                        led1Off()
                     }
                 }
             }
@@ -71,6 +71,14 @@ Item {
                 id: led2_switch
                 enabled: switchersEnabled
                 checkedColor: switcherColor
+
+                onCheckedChanged: {
+                    if (led2_switch.checked === true) {
+                        led2On()
+                    } else {
+                        led2Off()
+                    }
+                }
             }
 
             Text {
@@ -82,6 +90,14 @@ Item {
                 id: coolers_switch
                 enabled: switchersEnabled
                 checkedColor: switcherColor
+
+                onCheckedChanged: {
+                    if (coolers_switch.checked === true) {
+                        ledCoolersOn()
+                    } else {
+                        ledCoolersOff()
+                    }
+                }
             }
 
             Text {
@@ -93,6 +109,14 @@ Item {
                 id: fans_switch
                 enabled: switchersEnabled
                 checkedColor: switcherColor
+
+                onCheckedChanged: {
+                    if (fans_switch.checked === true) {
+                        caseFansOn()
+                    } else {
+                        caseFansOff()
+                    }
+                }
             }
         }
 

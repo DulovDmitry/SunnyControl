@@ -20,7 +20,6 @@ int main(int argc, char *argv[])
 
     AppEngine appEngine;
     engine.rootContext()->setContextObject(&appEngine);
-    engine.rootContext()->setContextProperty("logText", appEngine.appEngineProperty_logText);
 
     engine.load(url);
 

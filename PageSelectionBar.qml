@@ -16,8 +16,8 @@ Rectangle {
     function pageButtonClicked(clickedButton) {
         mainPageButton.isActive = false
         manualControlPageButton.isActive = false
-        infoPageButton.isActive = false
-        stirringPageButton.isActive = false
+        logsPageButton.isActive = false
+        //stirringPageButton.isActive = false
 
         clickedButton.isActive = true
     }
@@ -71,7 +71,7 @@ Rectangle {
     }
 
     PageSelectionButton {
-        id: infoPageButton
+        id: logsPageButton
         pageNumber: 2
 
         isActive: false
@@ -87,20 +87,20 @@ Rectangle {
         onClicked: root.buttonClicked(pageNumber)
     }
 
-    PageSelectionButton {
-        id: stirringPageButton
-        pageNumber: 3
+//    PageSelectionButton {
+//        id: stirringPageButton
+//        pageNumber: 3
 
-        isActive: false
-        buttonText: "Settings"
-        fontSize: parent.fontSize
-        buttonHeight: parent.buttonHeight
+//        isActive: false
+//        buttonText: "Settings"
+//        fontSize: parent.fontSize
+//        buttonHeight: parent.buttonHeight
 
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: parent.buttonBottomMargin
-        anchors.left: infoPageButton.right
-        anchors.leftMargin: parent.buttonLeftMargin
+//        anchors.bottom: parent.bottom
+//        anchors.bottomMargin: parent.buttonBottomMargin
+//        anchors.left: infoPageButton.right
+//        anchors.leftMargin: parent.buttonLeftMargin
 
-        onClicked: root.buttonClicked(pageNumber)
-    }
+//        onClicked: root.buttonClicked(pageNumber)
+//    }
 }
