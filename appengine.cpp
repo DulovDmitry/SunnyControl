@@ -7,13 +7,15 @@
 AppEngine::AppEngine(QObject *parent)
     : QObject{parent}
 {
-    wiringPiSetup();
+//    wiringPiSetup();
 //    pinMode(LED_PIN, OUTPUT);
 //    pinMode(LED_FANS_PIN, OUTPUT);
 //    pinMode(CASE_FANS_PIN, OUTPUT);
 //    digitalWrite(LED_PIN, LOW);
 //    digitalWrite(LED_FANS_PIN, LOW);
 //    digitalWrite(CASE_FANS_PIN, LOW);
+
+    appEngineProperty_logText = "uuuuuuuuuuuuuuu";
 }
 
 void AppEngine::ledOn()

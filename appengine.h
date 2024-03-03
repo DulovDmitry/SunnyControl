@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QDebug>
 
-#include <wiringPi.h>
+//#include <wiringPi.h>
 //#include "/home/sunny/wiringOP/wiringPi/wiringPi.h"
 
 class AppEngine : public QObject
@@ -19,6 +19,8 @@ public:
     Q_INVOKABLE void ledFansOff();
     Q_INVOKABLE void caseFansOn();
     Q_INVOKABLE void caseFansOff();
+
+    QString appEngineProperty_logText;
 
 signals:
 
