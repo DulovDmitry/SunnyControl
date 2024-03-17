@@ -7,7 +7,7 @@
 
 #ifdef Q_OS_LINUX
 #include <wiringPi.h>
-#include "/home/sunny/wiringOP/wiringPi/wiringPi.h"
+#include "/home/orangepi/wiringOP/wiringPi/wiringPi.h"
 #endif
 
 class AppEngine : public QObject

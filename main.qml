@@ -28,7 +28,8 @@ ApplicationWindow {
 
     function createNumberKeyboardDialog(counterIdentifier) {
         if (numberKeyboardDialogHolder === null) {
-            var component = Qt.createComponent("NumberKeyboard.qml")
+            //var component = Qt.createComponent("NumberKeyboard.qml")
+            var component = Qt.createComponent("qrc:/NumberKeyboard.qml")
             numberKeyboardDialogHolder = component.createObject(window, {"x":0, "y":0})
             if (numberKeyboardDialogHolder) {
                 numberKeyboardDialogHolder.counterToBeChanged = counterIdentifier

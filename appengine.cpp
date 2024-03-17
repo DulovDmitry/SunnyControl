@@ -1,9 +1,9 @@
 #include "appengine.h"
 
-#define LED1_PIN 1
-#define LED2_PIN 2
-#define LED_COOLERS_PIN 3
-#define CASE_FANS_PIN 4
+#define LED1_PIN 3
+#define LED2_PIN 4
+#define LED_COOLERS_PIN 9
+#define CASE_FANS_PIN 10
 
 AppEngine::AppEngine(QObject *parent)
     : QObject{parent},
@@ -11,6 +11,8 @@ AppEngine::AppEngine(QObject *parent)
       m_dateTimeFormat("[dd.MM.yyyy | hh:mm:ss]"),
       m_dateTime()
 {
+    writeToLog("The program has been started");
+
 #ifdef Q_OS_LINUX
     wiringPiSetup();
 
@@ -25,7 +27,9 @@ AppEngine::AppEngine(QObject *parent)
     digitalWrite(CASE_FANS_PIN, LOW);
 #endif
 
-    writeToLog("The program has been started");
+    writeToLog("wiringPiSetup() completed");
+    writeToLog("All pins are configured");
+
 }
 
 void AppEngine::led1On()
